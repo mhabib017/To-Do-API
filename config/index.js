@@ -2,8 +2,8 @@
 const dotenv = require("dotenv");
 dotenv.config();
 module.exports = {
-	HOST: process.env.HOST,
-	PORT: process.env.PORT,
+	HOST: process.env.HOST || "0.0.0.0",
+	PORT: process.env.PORT || 3000,
 	// Database
 	DB_HOST: process.env.DB_HOST,
 	DB_USER: process.env.DB_USER,
