@@ -1,43 +1,35 @@
 const moment = require("moment");
-
+const {
+	CreateResponse,
+	GetResponse,
+	DeleteResponse,
+	InternalServerError,
+	NotFoundError,
+} = require("../../utils/responses");
 const knex = require("../../db-connection");
 
 class ItemService {
 	static async getListItemByUserId(userId) {
 		try {
 			let res = await knex
-				.select([
-					"id",
-					"name",
-					"description",
-					"url",
-					"created_at",
-					"updated_at",
-				])
+				.select(["id", "name", "description", "created_at", "updated_at"])
 				.from("items")
 				.where({deleted_at: null, user_id: userId});
 			return res;
-		} catch (error) {
-			throw error;
+		} catch (err) {
+			throw InternalServerError(err);
 		}
 	}
 	static async getItem(id) {
 		try {
 			let res = await knex
-				.select([
-					"id",
-					"name",
-					"description",
-					"url",
-					"created_at",
-					"updated_at",
-				])
+				.select(["id", "name", "description", "created_at", "updated_at"])
 				.from("items")
 				.whereNull("deleted_at")
 				.where("id", id);
 			return res;
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 	static async createItem(item) {
@@ -46,7 +38,7 @@ class ItemService {
 			let newItem = await this.getItem(id[0].id);
 			return newItem;
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 	static async updateItem(item) {
@@ -55,7 +47,7 @@ class ItemService {
 			let updatedItem = await this.getItem(item.id);
 			return updatedItem;
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 	static async deleteItem(id) {
@@ -67,7 +59,7 @@ class ItemService {
 			});
 			return res;
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 }

@@ -1,5 +1,10 @@
 const express = require("express");
 const config = require("./config");
+const {
+	RouteNotFoundHandler,
+	AllRouteHandler,
+} = require("./app/middleware/route-handler");
+const ErrorHandler = require("./app/middleware/error-handler");
 const app = express();
 app.use(express.json());
 const port = config.PORT;
@@ -26,8 +31,17 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.use("/api/v1/", appRouter);
+app.use("*", AllRouteHandler);
 
-app.listen(port, () => {
-	console.log(`To Do List app listening on port ${port}`);
+app.use("/api/v1/", appRouter);
+app.use("/uploads", express.static("uploads"));
+
+app.use("*", RouteNotFoundHandler);
+app.use("*", ErrorHandler);
+app.use(RouteNotFoundHandler);
+
+server = app.listen(port, () => {
+	console.log(`To Do List API Working`);
+	const {address, port} = server.address();
+	console.log(`Server is running at http://${address}:${port}`);
 });

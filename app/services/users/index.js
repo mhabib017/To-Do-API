@@ -1,6 +1,5 @@
-const moment = require("moment");
-
 const knex = require("../../db-connection");
+const {InternalServerError, NotFoundError} = require("../../utils/responses");
 
 class UserService {
 	static async getUserByUsername(username) {
@@ -12,7 +11,7 @@ class UserService {
 				.where("username", username);
 			return res;
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 
@@ -25,7 +24,7 @@ class UserService {
 				.where("id", id);
 			return res;
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 
@@ -42,9 +41,9 @@ class UserService {
 				delete newUser.password;
 				return newUser;
 			}
-			throw "Username or password is incorrect.";
+			throw NotFoundError(["Username or password is incorrect."]);
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 
@@ -56,9 +55,9 @@ class UserService {
 				let newUser = await this.getUserById(id[0].id);
 				return newUser[0];
 			}
-			throw "Username already exists.";
+			throw NotFoundError(["Username already exists."]);
 		} catch (err) {
-			throw err;
+			throw InternalServerError(err);
 		}
 	}
 }

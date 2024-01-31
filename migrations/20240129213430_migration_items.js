@@ -15,6 +15,12 @@ exports.up = function (knex) {
 			table.increments("id").primary();
 			table.string("name");
 			table.string("description");
+			table.integer("user_id");
+			table.timestamp("deleted_at");
+			table.timestamps(true, true);
+		})
+		.createTable("files", function (table) {
+			table.increments("id").primary();
 			table.string("url");
 			table.integer("user_id");
 			table.timestamp("deleted_at");
