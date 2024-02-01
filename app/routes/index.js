@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const itemRounter = require("./items");
 const userRounter = require("./users");

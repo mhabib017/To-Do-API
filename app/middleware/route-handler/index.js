@@ -1,3 +1,5 @@
+"use strict";
+
 const {NotAuthorizedError} = require("../../utils/responses");
 
 function AllRouteHandler(req, res, next) {

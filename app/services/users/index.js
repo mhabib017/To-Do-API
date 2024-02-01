@@ -1,3 +1,4 @@
+"use strict";
 const knex = require("../../db-connection");
 const {InternalServerError, NotFoundError} = require("../../utils/responses");
 

@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const FilesController = require("../../controllers/files");
 const fileHandler = require("../../middleware/file-handler");

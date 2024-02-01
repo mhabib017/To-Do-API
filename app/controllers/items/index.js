@@ -1,4 +1,6 @@
+"use strict";
 const ItemService = require("../../services/items");
+const moment = require("moment");
 const {ItemCreateSchema, ItemUpdateSchema} = require("../../schema/items");
 const {
 	CreateResponse,
@@ -14,7 +16,8 @@ class ItemController {
 		try {
 			let response = await ItemService.getListItemByUserId(req.user.id);
 
-			res.json(GetResponse(response));
+			let resObject = GetResponse(response);
+			res.status(resObject.statusCode).json(resObject);
 		} catch (err) {
 			next(err);
 		}
@@ -24,7 +27,8 @@ class ItemController {
 			let response = await ItemService.getItem(req.params.id);
 			if (response.length == 0) throw NotFoundError("Item not found");
 
-			res.json(GetResponse(response));
+			let resObject = GetResponse(response[0]);
+			res.status(resObject.statusCode).json(resObject);
 		} catch (err) {
 			next(err);
 		}
@@ -37,9 +41,12 @@ class ItemController {
 			if (error) throw ValidationError(error);
 
 			item.user_id = req.user.id;
+			item.created_at = moment().utc().format("YYYY-MM-DD HH:mm").toString();
+			item.updated_at = item.created_at;
 			let response = await ItemService.createItem(item);
 
-			res.json(CreateResponse(response));
+			let resObject = CreateResponse(response[0]);
+			res.status(resObject.statusCode).json(resObject);
 		} catch (err) {
 			next(err);
 		}
@@ -54,9 +61,12 @@ class ItemController {
 
 			const {error} = ItemUpdateSchema.validate(item);
 			if (error) throw ValidationError(error);
+
+			item.updated_at = moment().utc().format("YYYY-MM-DD HH:mm").toString();
 			let response = await ItemService.updateItem(item);
 
-			res.json(UpdateResponse(response));
+			let resObject = UpdateResponse(response[0]);
+			res.status(resObject.statusCode).json(resObject);
 		} catch (err) {
 			next(err);
 		}
@@ -68,7 +78,8 @@ class ItemController {
 
 			await ItemService.deleteItem(req.params.id);
 
-			res.json(DeleteResponse());
+			let resObject = DeleteResponse();
+			res.status(resObject.statusCode).json(resObject);
 		} catch (err) {
 			next(err);
 		}

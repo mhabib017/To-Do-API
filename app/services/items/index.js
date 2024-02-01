@@ -1,11 +1,6 @@
+"use strict";
 const moment = require("moment");
-const {
-	CreateResponse,
-	GetResponse,
-	DeleteResponse,
-	InternalServerError,
-	NotFoundError,
-} = require("../../utils/responses");
+const {InternalServerError} = require("../../utils/responses");
 const knex = require("../../db-connection");
 
 class ItemService {
@@ -43,7 +38,6 @@ class ItemService {
 	}
 	static async updateItem(item) {
 		try {
-			let res = await knex("items").where({id: item.id}).update(item);
 			let updatedItem = await this.getItem(item.id);
 			return updatedItem;
 		} catch (err) {
@@ -52,7 +46,7 @@ class ItemService {
 	}
 	static async deleteItem(id) {
 		try {
-			let time = moment();
+			let time = moment().utc().format("YYYY-MM-DD HH:mm").toString();
 			let res = await knex("items").where({id: id}).update({
 				updated_at: time,
 				deleted_at: time,

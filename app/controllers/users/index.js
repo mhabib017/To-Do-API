@@ -1,5 +1,7 @@
+"use strict";
 const UserService = require("../../services/users");
 const {encodeJWT} = require("../../utils/jwt");
+const moment = require("moment");
 
 const {UserLoginSchema, UserRegisterSchema} = require("../../schema/users");
 const {
@@ -11,16 +13,24 @@ const {
 class UserController {
 	static async register(req, res, next) {
 		try {
-			const {error} = UserRegisterSchema.validate(req.body);
+			let userInput = req.body;
+
+			const {error} = UserRegisterSchema.validate(userInput);
 			if (error) throw ValidationError(error);
 
-			let user = await UserService.registerUser(req.body);
+			userInput.created_at = moment()
+				.utc()
+				.format("YYYY-MM-DD HH:mm")
+				.toString();
+			userInput.updated_at = userInput.created_at;
+
+			let user = await UserService.registerUser(userInput);
 			let token = encodeJWT(user);
-			res.json(
-				CreateResponse({
-					token,
-				})
-			);
+
+			let resObject = SuccessResponse({
+				token,
+			});
+			res.status(resObject.statusCode).json(resObject);
 		} catch (err) {
 			next(err);
 		}
@@ -32,11 +42,11 @@ class UserController {
 
 			let user = await UserService.loginUser(req.body);
 			let token = encodeJWT(user);
-			res.json(
-				SuccessResponse({
-					token,
-				})
-			);
+
+			let resObject = SuccessResponse({
+				token,
+			});
+			res.status(resObject.statusCode).json(resObject);
 		} catch (err) {
 			next(err);
 		}

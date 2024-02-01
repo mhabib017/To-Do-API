@@ -1,13 +1,15 @@
+"use strict";
+
 const NotFoundError = (message) => {
 	return {
 		statusCode: 404,
 		message: message || ["Not found"],
 	};
 };
-const NotAuthorizedError = (message) => {
+const NotAuthorizedError = (err) => {
 	return {
 		statusCode: 401,
-		message: message || ["Not authorized"],
+		message: err || ["Not authorized"],
 	};
 };
 

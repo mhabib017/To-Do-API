@@ -1,11 +1,13 @@
+"use strict";
 function errorHandler(error, req, res, next) {
-	statusCode = error.statusCode || 500;
-	message = error.message || ["Something went wrong"];
+	let statusCode = error.statusCode || 500;
+	let message = error.message || ["Something went wrong"];
 
-	// console.log("Error==>\n", error);
+	console.log("\n<<<Error>>>\n");
 	for (let key in error) {
-		console.log(key, error[key]);
+		console.log(key, " : ", error[key]);
 	}
+	console.log("\n<<<------->>>");
 
 	res.status(statusCode).json({
 		statusCode: statusCode,

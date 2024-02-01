@@ -1,6 +1,6 @@
 # To-Do-API
 
-This repo manifest the usage of node.js with express framework to develop a to do list api. Its a simple api which showcase basic usage of the framework. 
+This repo manifest the usage of node.js with express framework to develop a to do list api. Its a simple api which showcase basic usage of the framework. This api is deployed on Railway.
 
 ## Project Setup
 
@@ -17,7 +17,7 @@ In order to create table,  [Knex](https://knexjs.org/guide/migrations.html) is u
 npm install knex -g
 ```
 
- Create and .env file in the root directory and assign values to following keys in .env file.
+ Create .env file in the root directory and assign values to following keys in .env file. DB_NAME for database name, DB_Password for database password and SECRET_KEY for authentication which could be any string containing random characters.
 
 ```
 PORT=3000

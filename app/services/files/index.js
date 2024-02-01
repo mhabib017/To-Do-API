@@ -1,9 +1,5 @@
-const {
-	CreateResponse,
-	GetResponse,
-	DeleteResponse,
-	InternalServerError,
-} = require("../../utils/responses");
+"use strict";
+const {InternalServerError} = require("../../utils/responses");
 const knex = require("../../db-connection");
 
 class FileService {
@@ -25,7 +21,6 @@ class FileService {
 			let newFile = await this.getFile(id[0].id);
 			return newFile;
 		} catch (err) {
-			console.log("Err", err);
 			throw InternalServerError(err);
 		}
 	}
