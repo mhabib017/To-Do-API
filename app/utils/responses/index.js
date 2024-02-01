@@ -4,6 +4,12 @@ const NotFoundError = (message) => {
 		message: message || ["Not found"],
 	};
 };
+const NotAuthorizedError = (message) => {
+	return {
+		statusCode: 401,
+		message: message || ["Not authorized"],
+	};
+};
 
 const ValidationError = (err) => {
 	return {
@@ -69,4 +75,5 @@ module.exports = {
 	GetResponse,
 	DeleteResponse,
 	SuccessResponse,
+	NotAuthorizedError,
 };

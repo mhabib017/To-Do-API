@@ -1,5 +1,7 @@
 const {decodeJWT} = require("../../utils/jwt");
 
+const {NotAuthorizedError} = require("../../utils/responses");
+
 async function authenticate(req, res, next) {
 	try {
 		// console.log("Headers", req.headers);
@@ -14,7 +16,8 @@ async function authenticate(req, res, next) {
 		}
 		throw "Invalid authorization token";
 	} catch (error) {
-		res.status(401).json(error);
+		let err = NotAuthorizedError([error]);
+		res.status(err.statusCode).json(err);
 	}
 }
 module.exports = authenticate;
