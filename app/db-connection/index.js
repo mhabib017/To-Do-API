@@ -7,6 +7,7 @@ const knex = require("knex")({
 		host: config.DB_HOST,
 		database: config.DB_NAME,
 		password: config.DB_PASSWORD,
+		port: config.DB_PORT,
 	},
 });
 

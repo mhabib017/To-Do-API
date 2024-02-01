@@ -29,7 +29,7 @@ const SuccessResponse = (data) => {
 const InternalServerError = (err) => {
 	if (err.statusCode) return err;
 	return {
-		statusbar: 500,
+		statusCode: 500,
 		message: ["Internal Server Error"],
 		_private: [err],
 	};

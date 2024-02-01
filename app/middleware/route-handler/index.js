@@ -3,9 +3,11 @@ function AllRouteHandler(req, res, next) {
 	next();
 }
 function RouteNotFoundHandler(req, res, next) {
-	const error = new Error(`Can't find ${req.originalUrl} on server`);
-	error.statusCode = 404;
-	next(error);
+	const message = `\n${req.method}: ${req.originalUrl} \t ROUTE_NOT_FOUND`;
+	res.status(404).json({
+		statusCode: 404,
+		message: message,
+	});
 }
 module.exports = {
 	AllRouteHandler,

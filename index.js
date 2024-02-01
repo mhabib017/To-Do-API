@@ -34,10 +34,9 @@ app.use("*", AllRouteHandler);
 
 app.use("/api/v1/", appRouter);
 app.use("/uploads", express.static("uploads"));
-
-app.use("*", RouteNotFoundHandler);
 app.use("*", ErrorHandler);
-app.use(RouteNotFoundHandler);
+app.use("*", RouteNotFoundHandler);
+
 
 server = app.listen(config.PORT, config.HOST, () => {
 	console.log(`To Do List API Working`);
