@@ -37,10 +37,7 @@ app.use("/api/v1/", appRouter);
 
 app.use("/uploads", express.static("uploads"));
 app.use("*", ErrorHandler);
-app.post("^*$", function (req, res) {
-	// Now just issue the same request again, this time as a GET
-	res.redirect(302, req.url);
-});
+
 app.use("*", RouteNotFoundHandler);
 
 
