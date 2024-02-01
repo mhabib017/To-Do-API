@@ -3,7 +3,7 @@ function AllRouteHandler(req, res, next) {
 	next();
 }
 function RouteNotFoundHandler(req, res, next) {
-	const message = `\n${req.method}: ${req.originalUrl} \t ROUTE_NOT_FOUND`;
+	const message = `ROUTE_NOT_FOUND: ${req.originalUrl}`;
 	res.status(404).json({
 		statusCode: 404,
 		message: message,
