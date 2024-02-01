@@ -1,12 +1,16 @@
 const express = require("express");
 const config = require("./config");
+
+const bodyParser = require("body-parser");
 const {
 	RouteNotFoundHandler,
 	AllRouteHandler,
 } = require("./app/middleware/route-handler");
 const ErrorHandler = require("./app/middleware/error-handler");
 const app = express();
-app.use(express.json());
+// app.use(express.json());
+
+app.use(bodyParser.json());
 
 const appRouter = require("./app/routes");
 
