@@ -16,7 +16,7 @@ class UserController {
 			let userInput = req.body;
 
 			const {error} = UserRegisterSchema.validate(userInput);
-			if (error) throw ValidationError(error);
+			if (error) throw ValidationError([error.details[0].message]);
 
 			userInput.created_at = moment()
 				.utc()
@@ -38,7 +38,7 @@ class UserController {
 	static async login(req, res, next) {
 		try {
 			const {error} = UserLoginSchema.validate(req.body);
-			if (error) throw ValidationError(error);
+			if (error) throw ValidationError([error.details[0].message]);
 
 			let user = await UserService.loginUser(req.body);
 			let token = encodeJWT(user);

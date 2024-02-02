@@ -38,7 +38,7 @@ class ItemController {
 			let item = req.body;
 
 			const {error} = ItemCreateSchema.validate(item);
-			if (error) throw ValidationError(error);
+			if (error) throw ValidationError([error.details[0].message]);
 
 			item.user_id = req.user.id;
 			item.created_at = moment().utc().format("YYYY-MM-DD HH:mm").toString();
@@ -60,7 +60,7 @@ class ItemController {
 			if (currentItem.length == 0) throw NotFoundError("Item not found");
 
 			const {error} = ItemUpdateSchema.validate(item);
-			if (error) throw ValidationError(error);
+			if (error) throw ValidationError([error.details[0].message]);
 
 			item.updated_at = moment().utc().format("YYYY-MM-DD HH:mm").toString();
 			let response = await ItemService.updateItem(item);

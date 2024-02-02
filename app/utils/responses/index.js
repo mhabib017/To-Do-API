@@ -20,10 +20,10 @@ const ValidationError = (err) => {
 	};
 };
 
-const BadRequestError = () => {
+const BadRequestError = (err) => {
 	return {
 		statusCode: 400,
-		message: [],
+		message: err || ["Bad request error"],
 	};
 };
 

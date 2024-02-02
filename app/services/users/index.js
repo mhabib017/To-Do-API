@@ -1,6 +1,6 @@
 "use strict";
 const knex = require("../../db-connection");
-const {InternalServerError, NotFoundError} = require("../../utils/responses");
+const {InternalServerError, BadRequestError} = require("../../utils/responses");
 
 class UserService {
 	static async getUserByUsername(username) {
@@ -42,7 +42,7 @@ class UserService {
 				delete newUser.password;
 				return newUser;
 			}
-			throw NotFoundError(["Username or password is incorrect."]);
+			throw BadRequestError(["Username or password is incorrect."]);
 		} catch (err) {
 			throw InternalServerError(err);
 		}
@@ -56,7 +56,7 @@ class UserService {
 				let newUser = await this.getUserById(id[0].id);
 				return newUser[0];
 			}
-			throw NotFoundError(["Username already exists."]);
+			throw BadRequestError(["Username already exists."]);
 		} catch (err) {
 			throw InternalServerError(err);
 		}
